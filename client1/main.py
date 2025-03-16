@@ -8,9 +8,10 @@ class Cell:
         self.__button.grid(row=y+1, column=x)
 
     def changeSign(self):
-        self.__button.config(text=sign, state=DISABLED)
-        client.send(self.__coordinates.encode())
-        turnLabel.config("Opponent`s turn")
+        if turnVar.get() == "Your turn!":
+            self.__button.config(text=sign, state=DISABLED)
+            client.send(self.__coordinates.encode())
+            turnVar.set("Opponent`s turn!")
 
 IP = "127.0.0.1"
 PORT = 4000
@@ -20,7 +21,9 @@ sign = client.recv(1024).decode()
 root = Tk()
 root.geometry("300x400")
 root.title("Noughts and crosses")
-turnLabel = Label(text=client.recv(1024).decode())
+turnVar = StringVar()
+turnVar.set(client.recv(1024).decode())
+turnLabel = Label(textvariable=turnVar)
 turnLabel.grid(row=0, column=0, columnspan=3)
 field = [
     [

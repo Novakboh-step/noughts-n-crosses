@@ -12,6 +12,7 @@ noughts.send("o".encode())
 turns = ["Your turn!", "Opponent`s turn!"]
 crosses.send(turns[0].encode())
 noughts.send(turns[1].encode())
+noughts.send(crosses.recv(1024))
 crosses.close()
 noughts.close()
 server.close()
